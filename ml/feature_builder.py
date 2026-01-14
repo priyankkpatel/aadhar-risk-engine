@@ -47,6 +47,8 @@ def build_features():
         + 0.2 * df["exclusion_risk"]
     ).clip(lower=0)
 
+    df["district"] = df["district"].str.upper().str.strip()
+
     df.to_csv("data/processed/merged_aadhaar.csv", index=False)
     print("CIIM Aadhaar Risk Table created successfully.")
 
