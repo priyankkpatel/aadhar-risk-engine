@@ -1,16 +1,8 @@
 import sys
 import os
-
-# ----------------------------------------------------
-# FIX PYTHON PATH (THIS SOLVES THE IMPORT ERROR)
-# ----------------------------------------------------
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
-
-# ----------------------------------------------------
-# IMPORTS
-# ----------------------------------------------------
 import streamlit as st
 import pandas as pd
 import requests
@@ -21,9 +13,7 @@ import numpy as np
 
 from ml.action_simulator import simulate
 
-# ----------------------------------------------------
-# PAGE CONFIG
-# ----------------------------------------------------
+
 st.set_page_config(
     layout="wide", 
     page_title="Aadhaar Risk Prevention Dashboard",
@@ -60,9 +50,6 @@ st.caption("**Early warning system for Aadhaar access risks across India** - Rea
 
 API = "http://127.0.0.1:8000/api/v1"
 
-# ----------------------------------------------------
-# SIDEBAR - FILTERS
-# ----------------------------------------------------
 with st.sidebar:
     st.header("⚙️ Dashboard Controls")
     
@@ -95,9 +82,6 @@ with st.sidebar:
         st.error("No data available. Please run feature_builder.py first.")
         st.stop()
 
-# ----------------------------------------------------
-# FETCH AND PREPARE DATA
-# ----------------------------------------------------
 # Use direct data access for better performance
 data = df[df["date"] == selected_date].copy()
 
@@ -119,9 +103,6 @@ try:
 except Exception as e:
     st.warning(f"⚠️ Could not load geographic data: {e}")
 
-# ----------------------------------------------------
-# SUMMARY STATISTICS - TOP METRICS
-# ----------------------------------------------------
 st.markdown("---")
 col1, col2, col3, col4 = st.columns(4)
 
@@ -145,9 +126,6 @@ with col4:
 
 st.markdown("---")
 
-# ----------------------------------------------------
-# MAIN VISUALIZATION - MAP WITH IMPROVEMENTS
-# ----------------------------------------------------
 st.markdown("## 🗺️ Geographic Risk Distribution")
 
 # Clean and prepare data for map
@@ -208,9 +186,6 @@ if "CIIM" in data.columns:
 else:
     st.error("CIIM column not found in data.")
 
-# ----------------------------------------------------
-# DISTRICT DETAILED ANALYSIS SECTION
-# ----------------------------------------------------
 st.markdown("---")
 st.markdown("## 📍 District-Level Deep Dive Analysis")
 
@@ -244,9 +219,6 @@ if "state" in row:
 tab1, tab2, tab3, tab4 = st.tabs(["⏳ Risk Forecast", "👥 Human Impact", "📊 Risk Drivers", "🛠️ Recommendations"])
 
 with tab1:
-    # ----------------------------------------------------
-    # FAILURE FORECAST (IMPROVED) - TAB 1
-    # ----------------------------------------------------
     st.markdown("### ⏳ Time Until High-Risk Conditions")
     st.caption("Estimated time before district reaches critical risk levels (based on current trends)")
 
